@@ -59,8 +59,8 @@ trait Publish extends ScalaModule with Published with ScalafixModule {
   }
 }
 
-def publishOrg: String = "io.get-coursier.publish"
-def ghOrg: String      = "coursier"
+def publishOrg: String = "org.scala-lang"
+def ghOrg: String      = "scala"
 def ghName: String     = "publish"
 
 trait Published extends SonatypeCentralPublishModule {
@@ -70,9 +70,11 @@ trait Published extends SonatypeCentralPublishModule {
     organization = publishOrg,
     url = s"https://github.com/$ghOrg/$ghName",
     licenses = Seq(License.`Apache-2.0`),
-    versionControl = VersionControl.github("coursier", "publish"),
+    versionControl = VersionControl.github("scala", "publish"),
     developers = Seq(
-      Developer("alexarchambault", "Alex Archambault", "https://github.com/alexarchambault")
+      Developer("alexarchambault", "Alex Archambault", "https://github.com/alexarchambault"),
+      Developer("Gedochao", "Piotr Chabelski", "https://github.com/Gedochao"),
+      Developer("tgodzik", "Tomasz Godzik", "https://github.com/tgodzik")
     )
   )
   def publishVersion: T[String] = finalPublishVersion()
