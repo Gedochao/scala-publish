@@ -1,0 +1,18 @@
+package scala.publish.checksum.logger
+
+import java.io.PrintStream
+
+import scala.publish.checksum.ChecksumType
+
+final class BatchChecksumLogger(out: PrintStream, verbosity: Int) extends ChecksumLogger {
+  override def computing(id: Object, type0: ChecksumType, path: String): Unit =
+    if verbosity >= 0 then out.println(s"Computing ${type0.name} checksum of $path")
+  override def computed(
+    id: Object,
+    type0: ChecksumType,
+    path: String,
+    errorOpt: Option[Throwable]
+  ): Unit = {
+    if verbosity >= 0 then out.println(s"Computed ${type0.name} checksum of $path")
+  }
+}
