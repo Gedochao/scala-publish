@@ -11,7 +11,7 @@ import com.goyeau.mill.scalafix.ScalafixModule
 object Versions {
   def scala3        = "3.3.8"
   def coursier      = "2.1.26"
-  def jsoniterScala = "2.41.2"
+  def jsoniterScala = "2.41.7"
   def sttp          = "3.11.0"
   def utest         = "0.9.5"
 }
