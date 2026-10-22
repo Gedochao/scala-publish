@@ -27,7 +27,7 @@ object SonatypeTests extends TestSuite {
           stagingRepoRetryParams = EmaRetryParams(20, 100L, 1.0f)
         )
 
-        sonatypeApi20.sendPromoteStagingRepositoryRequest(
+        sonatypeApi20.sendCloseStagingRepositoryRequest(
           SonatypeApi.Profile("id", "name", "uri"),
           "repo",
           "description"
@@ -48,7 +48,7 @@ object SonatypeTests extends TestSuite {
           retryOnTimeout = 1
         )
 
-        try sonatypeApi3.sendPromoteStagingRepositoryRequest(
+        try sonatypeApi3.sendCloseStagingRepositoryRequest(
             SonatypeApi.Profile("id", "name", "uri"),
             "repo",
             "description"
@@ -56,7 +56,7 @@ object SonatypeTests extends TestSuite {
         catch {
           case e: Exception
               if e.getMessage ==
-                s"Failed to get $base/staging/profiles/id/promote (http status: 500, response: Internal server error)" =>
+                s"Failed to get $base/staging/profiles/id/finish (http status: 500, response: Internal server error)" =>
           case t: Throwable =>
             println(s"Unexpected error: ${t.getMessage}")
             assert(false)

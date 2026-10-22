@@ -30,8 +30,8 @@ object PublishRepository {
 
     def withAuthentication(auth: Authentication): Simple =
       copy(
-        snapshotRepo = snapshotRepo.withAuthentication(Some(auth)),
-        readRepoOpt = readRepoOpt.map(_.withAuthentication(Some(auth)))
+        snapshotRepo = snapshotRepo.copy(authentication = Some(auth)),
+        readRepoOpt = readRepoOpt.map(_.copy(authentication = Some(auth)))
       )
   }
 
@@ -79,32 +79,34 @@ object PublishRepository {
       message = "Snapshot repo as per the old OSSRH purposes, kept for historical purposes",
       since = "0.4.0"
     )
-    def legacySnapshotRepo: MavenRepository =
-      base.withRoot(s"${base.root}/content/repositories/snapshots")
+    def legacySnapshotRepo: MavenRepository = legacySnapshotRepo0
+
+    private def legacySnapshotRepo0: MavenRepository =
+      base.copy(root = s"${base.root}/content/repositories/snapshots")
 
     def snapshotRepo: MavenRepository =
-      if useLegacySnapshots then legacySnapshotRepo
-      else base.withRoot(s"$centralPortalBase/repository/maven-snapshots")
+      if useLegacySnapshots then legacySnapshotRepo0
+      else base.copy(root = s"$centralPortalBase/repository/maven-snapshots")
 
     def releaseRepo: MavenRepository =
-      base.withRoot(s"$restBase/staging/deploy/maven2")
+      base.copy(root = s"$restBase/staging/deploy/maven2")
     def releaseRepoOf(repoId: String): MavenRepository =
-      base.withRoot(s"$restBase/staging/deployByRepositoryId/$repoId")
+      base.copy(root = s"$restBase/staging/deployByRepositoryId/$repoId")
     def readSnapshotRepo: MavenRepository =
       snapshotRepo
     def readReleaseRepo: MavenRepository =
-      base.withRoot(s"${base.root}/content/repositories/releases")
+      base.copy(root = s"${base.root}/content/repositories/releases")
 
     override def checkResultsRepo(isSnapshot: Boolean): MavenRepository =
       if isSnapshot then super.checkResultsRepo(isSnapshot)
-      else base.withRoot(s"${base.root}/content/repositories/public")
+      else base.copy(root = s"${base.root}/content/repositories/public")
 
     def restBase: String =
       s"${base.root}/service/local"
 
     def withAuthentication(auth: Authentication): Sonatype =
       copy(
-        base = base.withAuthentication(Some(auth))
+        base = base.copy(authentication = Some(auth))
       )
   }
 

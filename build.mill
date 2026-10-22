@@ -10,7 +10,7 @@ import com.goyeau.mill.scalafix.ScalafixModule
 
 object Versions {
   def scala3        = "3.3.8"
-  def coursier      = "2.1.25-M26"
+  def coursier      = "2.1.26"
   def jsoniterScala = "2.41.2"
   def sttp          = "3.11.0"
   def utest         = "0.9.5"
@@ -19,8 +19,8 @@ object Versions {
 object publish extends Publish
 
 object Deps {
-  def coursierCache = mvn"io.get-coursier:coursier-cache_2.13:${Versions.coursier}"
-  def coursierCore  = mvn"io.get-coursier:coursier-core_2.13:${Versions.coursier}"
+  def coursierCache = mvn"io.get-coursier::coursier-cache:${Versions.coursier}"
+  def coursierCore  = mvn"io.get-coursier::coursier-core:${Versions.coursier}"
   def jsoniterCore  =
     mvn"com.github.plokhotnyuk.jsoniter-scala::jsoniter-scala-core:${Versions.jsoniterScala}"
   def jsoniterMacros =
