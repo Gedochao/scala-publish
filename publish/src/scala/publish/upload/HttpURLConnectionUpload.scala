@@ -3,7 +3,7 @@ package scala.publish.upload
 import coursier.core.Authentication
 
 import java.io.{ByteArrayOutputStream, InputStream, OutputStream}
-import java.net.{HttpURLConnection, URL}
+import java.net.{HttpURLConnection, URI}
 import java.nio.charset.StandardCharsets
 
 import scala.jdk.CollectionConverters.*
@@ -27,7 +27,7 @@ final case class HttpURLConnectionUpload(
     logger.uploading(url, loggingIdOpt, Some(content.length))
 
     val res = Try {
-      val url0 = new URL(url + urlSuffix)
+      val url0 = URI.create(url + urlSuffix).toURL
 
       val conn = url0.openConnection().asInstanceOf[HttpURLConnection]
 

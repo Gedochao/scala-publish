@@ -4,8 +4,8 @@ import coursier.core.Authentication
 import sttp.client3.*
 import sttp.model.{Header, Uri}
 
-import java.time.Instant
-import java.util.Date
+import java.time.format.DateTimeFormatter
+import java.time.{Instant, ZonedDateTime}
 
 import scala.publish.download.logger.DownloadLogger
 import scala.util.control.NonFatal
@@ -43,7 +43,7 @@ final case class HttpDownload(
 
         if resp.isSuccess then {
           val lastModifiedOpt = resp.header("Last-Modified").map { value =>
-            Instant.ofEpochMilli(Date.parse(value))
+            ZonedDateTime.parse(value, DateTimeFormatter.RFC_1123_DATE_TIME).toInstant
           }
           Some((lastModifiedOpt, resp.body))
         }
